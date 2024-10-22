@@ -25,7 +25,14 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
 Plug 'nvim-tree/nvim-tree.lua'
-Plug 'nvim-tree/nvim-web-devicons' " Opcional, para ícones de arquivos
+
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'tpope/vim-fugitive' 
+
+Plug 'nvim-tree/nvim-web-devicons' " Recommended (for coloured icons)
+" Plug 'ryanoasis/vim-devicons' Icons without colours
+Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 call plug#end()
 
 colorscheme github_dark
@@ -42,6 +49,8 @@ nnoremap <leader>v :vsplit
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <c-p> :Files<cr>
 nnoremap <c-f> :Ag<space>
+nnoremap <silent> <Tab> :BufferLineCycleNext<CR>
+nnoremap <silent> <S-Tab> :BufferLineCyclePrev<CR>
 
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips'
@@ -53,11 +62,32 @@ let g:user_emmet_settings = {
   \ }
 " Mapeie a tecla <C-n> para abrir e fechar o explorador
 nnoremap <C-e> :NvimTreeToggle<CR>
-
+set termguicolors
 " Configurações adicionais
 lua << EOF
 require("nvim-tree").setup({
-  -- Suas configurações personalizadas aqui
+  -- Suas configurações Personalizadas aqui
 })
+require('gitsigns').setup()
+require('lualine').setup()
+require("bufferline").setup{
+options = {
+    mode = "buffers", -- Define que serão exibidos buffers
+    numbers = "ordinal",
+    diagnostics = "nvim_lsp",
+    separator_style = "slant", -- Estilo do separador: "slant", "thick", "thin"
+    offsets = {{
+      filetype = "NvimTree",
+      text = "File Explorer",
+      text_align = "left",
+      separator = true
+    }},
+    show_buffer_icons = true, -- Exibe ícones dos arquivos
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+    persist_buffer_sort = true, -- Mantém a ordem dos buffers
+    always_show_bufferline = true,
+  }
+}
 EOF
 
