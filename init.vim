@@ -52,6 +52,17 @@ nnoremap <c-f> :Ag<space>
 nnoremap <silent> <Tab> :BufferLineCycleNext<CR>
 nnoremap <silent> <S-Tab> :BufferLineCyclePrev<CR>
 
+" Use <Tab> para navegar pelas sugestões
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Confirma a seleção com <Enter>
+inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<CR>"
+
+" Abre o menu de autocompletar manualmente com <C-Space>
+inoremap <silent><expr> <C-Space> coc#refresh()
+
+
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips'
 let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-html', 'coc-css']
